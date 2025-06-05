@@ -22,7 +22,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "3000:3000"
+      - "${PORT}:${PORT}"
     volumes:
       - .:/app
     environment:
@@ -30,6 +30,7 @@ services:
       DB_USER: ${MYSQL_USER}
       DB_PASSWORD: ${MYSQL_PASSWORD}
       DB_NAME: ${MYSQL_DATABASE}
+      PORT: ${PORT}
     env_file:
       - .env
 
