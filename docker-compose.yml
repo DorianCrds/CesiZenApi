@@ -28,8 +28,6 @@ services:
       - mysql
     ports:
       - "${PORT}:${PORT}"
-    volumes:
-      - .:/app
     environment:
       DB_HOST: mysql
       DB_USER: ${MYSQL_USER}
