@@ -26,6 +26,7 @@ model User {
   password  String
   roleId    Int?     @map("role_id")
   role      Role?    @relation(fields: [roleId], references: [id])
+  userResponses UserResponse[]
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -37,6 +38,7 @@ model Page {
   title     String
   slug      String         @unique
   content   ContentBlock[]
+  menuItems MenuItem[]
   createdAt DateTime       @default(now()) @map("created_at")
   updatedAt DateTime       @updatedAt @map("updated_at")
 
@@ -46,7 +48,7 @@ model Page {
 model ContentBlock {
   id        Int      @id @default(autoincrement())
   type      String   // 'text', 'image', 'video', etc.
-  content   String   // HTML ou texte brut
+  content   String   // HTML or raw text
   order     Int
   pageId    Int      @map("page_id")
   page      Page     @relation(fields: [pageId], references: [id])
@@ -74,6 +76,7 @@ model Questionnaire {
   title     String
   description String
   events    Event[]
+  userResponses UserResponse[]
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -83,7 +86,7 @@ model Questionnaire {
 model Event {
   id              Int           @id @default(autoincrement())
   label           String
-  score           Int           // Nombre de points associés
+  score           Int           // Associated score
   questionnaireId Int           @map("questionnaire_id")
   questionnaire   Questionnaire @relation(fields: [questionnaireId], references: [id])
   createdAt       DateTime      @default(now()) @map("created_at")
