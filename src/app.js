@@ -7,6 +7,8 @@ const roleRoutesV1 = require('./routes/v1/roleRoutes');
 const authRoutesV1 = require('./routes/v1/authRoutes');
 const questionnaireRoutesV1 = require('./routes/v1/questionnaireRoutes');
 const pageRoutesV1 = require('./routes/v1/pageRoutes');
+const eventRoutesV1 = require('./routes/v1/eventRoutes');
+
 
 const authenticate = require('./middlewares/authMiddleware')
 
@@ -24,6 +26,8 @@ apiV1Router.use('/users', authenticate, userRoutesV1);
 apiV1Router.use('/roles', authenticate, roleRoutesV1);
 apiV1Router.use('/questionnaires', authenticate, questionnaireRoutesV1);
 apiV1Router.use('/pages', authenticate, pageRoutesV1);
+apiV1Router.use('/events', authenticate, eventRoutesV1);
+
 
 app.use('/cesizen/api/v1', apiV1Router)
 
