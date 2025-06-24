@@ -24,8 +24,65 @@ const login = async (req, res) => {
 
         res.json({ token });
     } catch (err) {
-        res.status(500).json({ error: 'Servor error' });
+        res.status(500).json({ error: 'Servor error during login' });
     }
 };
 
-module.exports = { login };
+const register = async (req, res) => {
+    const { email, password, firstname, lastname } = req.body;
+
+    try {
+        const existingUser = await prisma.user.findUnique({ where: { email } });
+        if (existingUser) return res.status(400).json({ error: 'User already exists' });
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const defaultRole = await prisma.role.findFirst({
+            where: { label: 'user' },
+        });
+
+        const user = await prisma.user.create({
+            data: {
+                email,
+                password: hashedPassword,
+                firstname,
+                lastname,
+                roleId: defaultRole?.id || null,
+            },
+        });
+
+        const token = generateToken(user);
+
+        res.status(201).json({ token });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error during registration' });
+    }
+};
+
+const me = async (req, res) => {
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id: req.user.id },
+            select: {
+                id: true,
+                email: true,
+                firstname: true,
+                lastname: true,
+                role: { select: { id: true, label: true } },
+                createdAt: true,
+                updatedAt: true,
+            },
+        });
+
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
+        res.json(user);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error fetching current user' });
+    }
+};
+
+
+module.exports = { login, register, me };

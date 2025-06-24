@@ -6,6 +6,7 @@ async function main() {
     if (existingRoles.length === 0) {
         await prisma.role.createMany({
             data: [
+                { label: 'super-admin' },
                 { label: 'admin' },
                 { label: 'user' },
             ],
