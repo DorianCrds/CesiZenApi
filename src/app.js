@@ -11,7 +11,7 @@ const eventRoutesV1 = require('./routes/v1/eventRoutes');
 const userResponseRoutesV1 = require('./routes/v1/userResponseRoutes');
 const contentBlockRoutesV1 = require('./routes/v1/contentBlockRoutes');
 const menuItemRoutesV1 = require('./routes/v1/menuItemRoutes');
-
+const stressFeedbackRangeRoutesV1 = require('./routes/v1/stressFeedbackRangeRoutes');
 
 const authenticate = require('./middlewares/authMiddleware')
 
@@ -33,7 +33,7 @@ apiV1Router.use('/events', authenticate, eventRoutesV1);
 apiV1Router.use('/user-responses', authenticate, userResponseRoutesV1);
 apiV1Router.use('/content-blocks', authenticate, contentBlockRoutesV1);
 apiV1Router.use('/menu-items', authenticate, menuItemRoutesV1);
-
+apiV1Router.use('/stress-feedback-ranges', authenticate, stressFeedbackRangeRoutesV1);
 
 app.use('/cesizen/api/v1', apiV1Router)
 
