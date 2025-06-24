@@ -9,6 +9,7 @@ const questionnaireRoutesV1 = require('./routes/v1/questionnaireRoutes');
 const pageRoutesV1 = require('./routes/v1/pageRoutes');
 const eventRoutesV1 = require('./routes/v1/eventRoutes');
 const userResponseRoutesV1 = require('./routes/v1/userResponseRoutes');
+const contentBlockRoutesV1 = require('./routes/v1/contentBlockRoutes');
 
 
 const authenticate = require('./middlewares/authMiddleware')
@@ -29,6 +30,7 @@ apiV1Router.use('/questionnaires', authenticate, questionnaireRoutesV1);
 apiV1Router.use('/pages', authenticate, pageRoutesV1);
 apiV1Router.use('/events', authenticate, eventRoutesV1);
 apiV1Router.use('/user-responses', authenticate, userResponseRoutesV1);
+apiV1Router.use('/content-blocks', authenticate, contentBlockRoutesV1);
 
 
 app.use('/cesizen/api/v1', apiV1Router)
