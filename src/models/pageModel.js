@@ -1,20 +1,20 @@
 const prisma = require('../config/prisma');
 
 const PageModel = {
-    getAll: async () => {
+    getAllPages: async () => {
         return await prisma.page.findMany({
             include: { content: true },
         });
     },
 
-    getBySlug: async (slug) => {
+    getPageBySlug: async (slug) => {
         return await prisma.page.findUnique({
             where: { slug },
             include: { content: true },
         });
     },
 
-    create: async ({ title, slug, contentBlocks }) => {
+    createPage: async ({ title, slug, contentBlocks }) => {
         return await prisma.page.create({
             data: {
                 title,
@@ -27,14 +27,14 @@ const PageModel = {
         });
     },
 
-    update: async (id, data) => {
+    updatePage: async (id, data) => {
         return await prisma.page.update({
             where: { id: Number(id) },
             data,
         });
     },
 
-    delete: async (id) => {
+    deletePage: async (id) => {
         return await prisma.page.delete({
             where: { id: Number(id) },
         });

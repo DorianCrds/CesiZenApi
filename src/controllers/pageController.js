@@ -1,18 +1,18 @@
 const PageModel = require('../models/pageModel');
 
 const PageController = {
-    getAll: async (req, res) => {
+    getAllPages: async (req, res) => {
         try {
-            const pages = await PageModel.getAll();
+            const pages = await PageModel.getAllPages();
             res.json(pages);
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
     },
 
-    getBySlug: async (req, res) => {
+    getPageBySlug: async (req, res) => {
         try {
-            const page = await PageModel.getBySlug(req.params.slug);
+            const page = await PageModel.getPageBySlug(req.params.slug);
             if (!page) return res.status(404).json({ error: 'Page not found' });
             res.json(page);
         } catch (err) {
@@ -20,28 +20,28 @@ const PageController = {
         }
     },
 
-    create: async (req, res) => {
+    createPage: async (req, res) => {
         try {
             const { title, slug, contentBlocks } = req.body;
-            const newPage = await PageModel.create({ title, slug, contentBlocks });
+            const newPage = await PageModel.createPage({ title, slug, contentBlocks });
             res.status(201).json(newPage);
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
     },
 
-    update: async (req, res) => {
+    updatePage: async (req, res) => {
         try {
-            const updated = await PageModel.update(req.params.id, req.body);
+            const updated = await PageModel.updatePage(req.params.id, req.body);
             res.json(updated);
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
     },
 
-    delete: async (req, res) => {
+    deletePage: async (req, res) => {
         try {
-            await PageModel.delete(req.params.id);
+            await PageModel.deletePage(req.params.id);
             res.status(204).end();
         } catch (err) {
             res.status(500).json({ error: err.message });

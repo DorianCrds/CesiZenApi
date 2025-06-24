@@ -1,23 +1,23 @@
 const prisma = require('../config/prisma');
 
 const RoleModel = {
-    getAll: async () => {
+    getAllRoles: async () => {
         return await prisma.role.findMany();
     },
 
-    getById: async (id) => {
+    getRoleById: async (id) => {
         return await prisma.role.findUnique({
             where: { id: Number(id) },
         });
     },
 
-    create: async (label) => {
+    createRole: async (label) => {
         return await prisma.role.create({
             data: { label },
         });
     },
 
-    delete: async (id) => {
+    deleteRole: async (id) => {
         await prisma.role.delete({
             where: { id: Number(id) },
         });

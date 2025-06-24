@@ -3,12 +3,12 @@ const router = express.Router();
 const pageController = require('../../controllers/pageController');
 
 // Public pages
-router.get('/', pageController.getAll);
-router.get('/:slug', pageController.getBySlug);
+router.get('/', pageController.getAllPages);
+router.get('/:slug', pageController.getPageBySlug);
 
 // Only for Administrators
-router.post('/', pageController.create);
-router.put('/:id', pageController.update);
-router.delete('/:id', pageController.delete);
+router.post('/', pageController.createPage);
+router.put('/:id', pageController.updatePage);
+router.delete('/:id', pageController.deletePage);
 
 module.exports = router;

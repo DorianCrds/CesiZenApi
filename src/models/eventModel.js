@@ -1,7 +1,7 @@
 const prisma = require('../config/prisma');
 
 const EventModel = {
-    getAll: async () => {
+    getAllEvents: async () => {
         return await prisma.event.findMany({
             include: {
                 questionnaire: true,
@@ -9,7 +9,7 @@ const EventModel = {
         });
     },
 
-    getById: async (id) => {
+    getEventById: async (id) => {
         return await prisma.event.findUnique({
             where: { id: Number(id) },
             include: {
@@ -18,7 +18,7 @@ const EventModel = {
         });
     },
 
-    create: async ({ label, score, questionnaireId }) => {
+    createEvent: async ({ label, score, questionnaireId }) => {
         return await prisma.event.create({
             data: {
                 label,
@@ -28,14 +28,14 @@ const EventModel = {
         });
     },
 
-    update: async (id, updateData) => {
+    updateEvent: async (id, updateData) => {
         return await prisma.event.update({
             where: { id: Number(id) },
             data: updateData,
         });
     },
 
-    delete: async (id) => {
+    deleteEvent: async (id) => {
         return await prisma.event.delete({
             where: { id: Number(id) },
         });

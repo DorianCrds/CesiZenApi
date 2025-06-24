@@ -1,18 +1,18 @@
 const QuestionnaireModel = require('../models/questionnaireModel');
 
 const QuestionnaireController = {
-    getAll: async (req, res) => {
+    getAllQuestionnaires: async (req, res) => {
         try {
-            const questionnaires = await QuestionnaireModel.getAll();
+            const questionnaires = await QuestionnaireModel.getAllQuestionnaires();
             res.json(questionnaires);
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
     },
 
-    getById: async (req, res) => {
+    getQuestionnaireById: async (req, res) => {
         try {
-            const questionnaire = await QuestionnaireModel.getById(req.params.id);
+            const questionnaire = await QuestionnaireModel.getQuestionnaireById(req.params.id);
             if (!questionnaire) return res.status(404).json({ message: 'Not found' });
             res.json(questionnaire);
         } catch (err) {
@@ -20,19 +20,19 @@ const QuestionnaireController = {
         }
     },
 
-    create: async (req, res) => {
+    createQuestionnaire: async (req, res) => {
         try {
             const { title, description, events } = req.body;
-            const newQuestionnaire = await QuestionnaireModel.create({ title, description, events });
+            const newQuestionnaire = await QuestionnaireModel.createQuestionnaire({ title, description, events });
             res.status(201).json(newQuestionnaire);
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
     },
 
-    delete: async (req, res) => {
+    deleteQuestionnaire: async (req, res) => {
         try {
-            await QuestionnaireModel.delete(req.params.id);
+            await QuestionnaireModel.deleteQuestionnaire(req.params.id);
             res.status(204).end();
         } catch (err) {
             res.status(500).json({ error: err.message });

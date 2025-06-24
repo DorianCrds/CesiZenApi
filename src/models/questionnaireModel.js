@@ -1,7 +1,7 @@
 const prisma = require('../config/prisma');
 
 const QuestionnaireModel = {
-    getAll: async () => {
+    getAllQuestionnaires: async () => {
         return await prisma.questionnaire.findMany({
             include: {
                 events: true,
@@ -9,7 +9,7 @@ const QuestionnaireModel = {
         });
     },
 
-    getById: async (id) => {
+    getQuestionnaireById: async (id) => {
         return await prisma.questionnaire.findUnique({
             where: { id: Number(id) },
             include: {
@@ -18,7 +18,7 @@ const QuestionnaireModel = {
         });
     },
 
-    create: async ({ title, description, events }) => {
+    createQuestionnaire: async ({ title, description, events }) => {
         return await prisma.questionnaire.create({
             data: {
                 title,
@@ -33,7 +33,7 @@ const QuestionnaireModel = {
         });
     },
 
-    delete: async (id) => {
+    deleteQuestionnaire: async (id) => {
         return await prisma.questionnaire.delete({
             where: { id: Number(id) },
         });

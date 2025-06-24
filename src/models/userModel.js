@@ -1,7 +1,7 @@
 const prisma = require('../config/prisma');
 
 const UserModel = {
-    getAll: async () => {
+    getAllUsers: async () => {
         return await prisma.user.findMany({
             include: {
                 role: true,
@@ -9,7 +9,7 @@ const UserModel = {
         });
     },
 
-    getById: async (id) => {
+    getUserById: async (id) => {
         return await prisma.user.findUnique({
             where: { id: Number(id) },
             include: {
@@ -18,7 +18,7 @@ const UserModel = {
         });
     },
 
-    create: async ({ firstname, lastname, email, password, roleId }) => {
+    createUser: async ({ firstname, lastname, email, password, roleId }) => {
         return await prisma.user.create({
             data: {
                 firstname,
@@ -30,14 +30,14 @@ const UserModel = {
         });
     },
 
-    update: async (id, updateData) => {
+    updateUser: async (id, updateData) => {
         return await prisma.user.update({
             where: { id: Number(id) },
             data: updateData,
         });
     },
 
-    delete: async (id) => {
+    deleteUser: async (id) => {
         return await prisma.user.delete({
             where: { id: Number(id) },
         });
