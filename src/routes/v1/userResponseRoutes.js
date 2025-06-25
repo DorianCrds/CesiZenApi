@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const UserResponseController = require('../../controllers/UserResponseController');
+const authorizeRoles = require("../../middlewares/roleMiddleware");
+const authenticate = require("../../middlewares/authMiddleware");
 
-router.get('/', UserResponseController.getAllUserResponses);
-router.get('/:id', UserResponseController.getUserResponseById);
-router.post('/', UserResponseController.createUserResponse);
-router.get('/:id/result', UserResponseController.getResult);
-router.delete('/:id', UserResponseController.deleteUserResponse);
+router.get('/', authenticate, authorizeRoles([1, 2]), UserResponseController.getAllUserResponses);
+router.get('/:id', authenticate, authorizeRoles([1, 2, 3]), UserResponseController.getUserResponseById);
+router.post('/', authenticate, authorizeRoles([1, 2, 3]), UserResponseController.createUserResponse);
+router.get('/:id/result', authenticate, authorizeRoles([1, 2, 3]), UserResponseController.getResult);
+router.delete('/:id', authenticate, authorizeRoles([1, 2]), UserResponseController.deleteUserResponse);
+
 
 module.exports = router;
