@@ -35,17 +35,6 @@ const UserResponseModel = {
         });
     },
 
-    updateUserResponse: async (id, data) => {
-        return prisma.userResponse.update({
-            where: { id: parseInt(id) },
-            data,
-            include: {
-                user: true,
-                questionnaire: true,
-            },
-        });
-    },
-
     deleteUserResponse: async (id) => {
         return prisma.userResponse.delete({
             where: { id: parseInt(id) },
