@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require("helmet");
 const cors = require('cors');
 
+const setupSwagger = require('./config/swagger');
 
 const app = express();
 
@@ -28,6 +29,8 @@ app.use(cors({
 
 app.use(express.json());
 
+setupSwagger(app);
+
 app.get('/', (req, res) => {
     res.send('CesiZenApi is running ✅');
 });
@@ -46,6 +49,6 @@ apiV1Router.use('/content-blocks', authenticate, contentBlockRoutesV1);
 apiV1Router.use('/menu-items', authenticate, menuItemRoutesV1);
 apiV1Router.use('/stress-feedback-ranges', authenticate, stressFeedbackRangeRoutesV1);
 
-app.use('/cesizen/api/v1', apiV1Router)
+app.use('/cesizen/api/v1', apiV1Router);
 
 module.exports = app;

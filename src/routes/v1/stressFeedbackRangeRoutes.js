@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const StressFeedbackRangeController = require('../../controllers/StressFeedbackRangeController');
+const StressFeedbackRangeController = require('../../controllers/stressFeedbackRangeController');
 const authenticate = require("../../middlewares/authMiddleware");
 const authorizeRoles = require("../../middlewares/roleMiddleware");
 const validate = require("../../middlewares/validateMiddleware");

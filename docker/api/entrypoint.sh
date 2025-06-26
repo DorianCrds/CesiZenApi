@@ -12,4 +12,11 @@ echo "🌱 Seeding database..."
 node prisma/seed.js || echo "❌ Seed failed"
 
 echo "🚀 Starting API server..."
-npm start
+
+if [ "$NODE_ENV" = "development" ]; then
+  echo "⚡ Starting with nodemon for live reload"
+  npx nodemon server.js
+else
+  echo "⚡ Starting with node"
+  npm start
+fi

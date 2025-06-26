@@ -1,4 +1,4 @@
-const MenuItemModel = require('../models/MenuItemModel');
+const MenuItemModel = require('../models/menuItemModel');
 
 const MenuItemController = {
     getAllMenuItems: async (req, res) => {

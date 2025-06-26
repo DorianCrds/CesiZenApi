@@ -1,4 +1,4 @@
-const ContentBlockModel = require('../models/ContentBlockModel');
+const ContentBlockModel = require('../models/contentBlockModel');
 
 const ContentBlockController = {
     getAllContentBlocks: async (req, res) => {

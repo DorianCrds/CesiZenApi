@@ -1,4 +1,4 @@
-const UserResponseModel = require('../models/UserResponseModel');
+const UserResponseModel = require('../models/userResponseModel');
 const prisma = require('../config/prisma');
 
 const UserResponseController = {
