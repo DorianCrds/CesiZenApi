@@ -50,7 +50,7 @@ const UserController = {
     deleteUser: async (req, res) => {
         try {
             await UserModel.deleteUser(req.params.id);
-            res.json({ message: 'User deleted' });
+            res.json({ message: 'User archived' });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
