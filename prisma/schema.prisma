@@ -1,0 +1,121 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  id        Int      @id @default(autoincrement())
+  label     String   @unique
+  users     User[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("roles")
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  lastname    String
+  firstname   String
+  email       String   @unique
+  password    String
+  roleId      Int?     @map("role_id")
+  role        Role?    @relation(fields: [roleId], references: [id])
+  userResponses UserResponse[]
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Page {
+  id        Int            @id @default(autoincrement())
+  title     String
+  slug      String         @unique
+  content   ContentBlock[]
+  menuItems MenuItem[]
+  createdAt DateTime       @default(now()) @map("created_at")
+  updatedAt DateTime       @updatedAt @map("updated_at")
+
+  @@map("pages")
+}
+
+model ContentBlock {
+  id        Int      @id @default(autoincrement())
+  type      String   // 'text', 'image', 'video', etc.
+  content   String   // HTML or raw text
+  order     Int
+  pageId    Int      @map("page_id")
+  page      Page     @relation(fields: [pageId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("content_blocks")
+}
+
+model MenuItem {
+  id        Int      @id @default(autoincrement())
+  label     String
+  slug      String
+  order     Int
+  pageId    Int?     @map("page_id")
+  page      Page?    @relation(fields: [pageId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("menu_items")
+}
+
+model Questionnaire {
+  id        Int      @id @default(autoincrement())
+  title     String
+  description String
+  events    Event[]
+  userResponses UserResponse[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("questionnaires")
+}
+
+model Event {
+  id              Int           @id @default(autoincrement())
+  label           String
+  score           Int           // Associated score
+  questionnaireId Int           @map("questionnaire_id")
+  questionnaire   Questionnaire @relation(fields: [questionnaireId], references: [id])
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+
+  @@map("events")
+}
+
+model UserResponse {
+  id              Int       @id @default(autoincrement())
+  userId          Int       @map("user_id")
+  user            User      @relation(fields: [userId], references: [id])
+  questionnaireId Int       @map("questionnaire_id")
+  questionnaire   Questionnaire @relation(fields: [questionnaireId], references: [id])
+  selectedEvents  String    // JSON array of selected event IDs
+  totalScore      Int
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  @@map("user_responses")
+}
+
+model StressFeedbackRange {
+  id         Int      @id @default(autoincrement())
+  minScore   Int
+  maxScore   Int
+  message    String
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("stress_feedback_ranges")
+}

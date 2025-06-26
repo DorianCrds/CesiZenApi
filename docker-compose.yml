@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   mysql:
     image: mysql:8.0
@@ -16,23 +14,30 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
+
   api:
-    build: .
+    build:
+      context: .
+      dockerfile: docker/api/Dockerfile
     restart: unless-stopped
     depends_on:
       - mysql
     ports:
       - "${PORT}:${PORT}"
-    volumes:
-      - .:/app
     environment:
       DB_HOST: mysql
       DB_USER: ${MYSQL_USER}
       DB_PASSWORD: ${MYSQL_PASSWORD}
       DB_NAME: ${MYSQL_DATABASE}
       PORT: ${PORT}
+      NODE_ENV: development
     env_file:
       - .env
+    volumes:
+    - ./:/app
+    - ./docker/api/entrypoint.sh:/app/entrypoint.sh
+    - /app/node_modules
+
 
 volumes:
   mysql_data:
