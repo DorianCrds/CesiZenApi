@@ -15,7 +15,7 @@ echo "🚀 Starting API server..."
 
 if [ "$NODE_ENV" = "development" ]; then
   echo "⚡ Starting with nodemon for live reload"
-  npx nodemon server.js
+  npx nodemon --legacy-watch server.js
 else
   echo "⚡ Starting with node"
   npm start
