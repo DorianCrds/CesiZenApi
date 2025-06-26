@@ -1,4 +1,7 @@
 const express = require('express');
+const helmet = require("helmet");
+const cors = require('cors');
+
 
 const app = express();
 
@@ -14,6 +17,14 @@ const menuItemRoutesV1 = require('./routes/v1/menuItemRoutes');
 const stressFeedbackRangeRoutesV1 = require('./routes/v1/stressFeedbackRangeRoutes');
 
 const authenticate = require('./middlewares/authMiddleware')
+
+app.use(helmet());
+
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 app.use(express.json());
 
