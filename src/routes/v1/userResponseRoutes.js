@@ -3,12 +3,16 @@ const router = express.Router();
 const UserResponseController = require('../../controllers/UserResponseController');
 const authorizeRoles = require("../../middlewares/roleMiddleware");
 const authenticate = require("../../middlewares/authMiddleware");
+const validate = require("../../middlewares/validateMiddleware");
+const {createUserResponseSchema} = require("../../validation/userResponseValidator");
 
-router.get('/', authenticate, authorizeRoles([1, 2]), UserResponseController.getAllUserResponses);
-router.get('/:id', authenticate, authorizeRoles([1, 2, 3]), UserResponseController.getUserResponseById);
-router.post('/', authenticate, authorizeRoles([1, 2, 3]), UserResponseController.createUserResponse);
-router.get('/:id/result', authenticate, authorizeRoles([1, 2, 3]), UserResponseController.getResult);
-router.delete('/:id', authenticate, authorizeRoles([1, 2]), UserResponseController.deleteUserResponse);
+router.use(authenticate);
+
+router.get('/', authorizeRoles([1, 2]), UserResponseController.getAllUserResponses);
+router.get('/:id', authorizeRoles([1, 2, 3]), UserResponseController.getUserResponseById);
+router.post('/', authorizeRoles([1, 2, 3]), validate(createUserResponseSchema), UserResponseController.createUserResponse);
+router.get('/:id/result', authorizeRoles([1, 2, 3]), UserResponseController.getResult);
+router.delete('/:id', authorizeRoles([1, 2]), UserResponseController.deleteUserResponse);
 
 
 module.exports = router;

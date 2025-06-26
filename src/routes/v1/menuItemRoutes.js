@@ -3,12 +3,16 @@ const router = express.Router();
 const MenuItemController = require('../../controllers/MenuItemController');
 const authenticate = require("../../middlewares/authMiddleware");
 const authorizeRoles = require("../../middlewares/roleMiddleware");
+const {menuItemSchema} = require("../../validation/menuItemValidator");
+const validate = require("../../middlewares/validateMiddleware");
 
-router.get('/', authenticate, authorizeRoles([1, 2, 3]), MenuItemController.getAllMenuItems);
-router.get('/:id', authenticate, authorizeRoles([1, 2, 3]), MenuItemController.getMenuItemById);
-router.post('/', authenticate, authorizeRoles([1, 2]), MenuItemController.createMenuItem);
-router.put('/:id', authenticate, authorizeRoles([1, 2]), MenuItemController.updateMenuItem);
-router.delete('/:id', authenticate, authorizeRoles([1, 2]), MenuItemController.deleteMenuItem);
+router.use(authenticate);
+
+router.get('/', authorizeRoles([1, 2, 3]), MenuItemController.getAllMenuItems);
+router.get('/:id', authorizeRoles([1, 2, 3]), MenuItemController.getMenuItemById);
+router.post('/', authorizeRoles([1, 2]), validate(menuItemSchema), MenuItemController.createMenuItem);
+router.put('/:id', authorizeRoles([1, 2]), validate(menuItemSchema), MenuItemController.updateMenuItem);
+router.delete('/:id', authorizeRoles([1, 2]), MenuItemController.deleteMenuItem);
 
 
 module.exports = router;
