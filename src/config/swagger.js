@@ -7,7 +7,7 @@ const swaggerOptions = {
         info: {
             title: 'CesiZen API',
             version: '1.0.0',
-            description: "CesiZen API documentation",
+            description: "Documentation de l'API CesiZen",
         },
         servers: [
             {
@@ -15,7 +15,11 @@ const swaggerOptions = {
             },
         ],
     },
-    apis: ['./src/routes/v1/*.js'],
+    apis: [
+        './src/routes/v1/*.js',
+        './src/docs/schemas/*.js',
+        './src/docs/routes/*.js',
+    ],
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
