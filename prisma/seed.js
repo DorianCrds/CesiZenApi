@@ -43,9 +43,46 @@ async function main() {
         console.log('ℹ️ Users already exist, skipping');
     }
 
-    const existingPages = await prisma.page.findMany();
-    if (existingPages.length === 0) {
-        const aboutPage = await prisma.page.create({
+    const existingHomePage = await prisma.page.findUnique({ where: { slug: 'accueil' } });
+
+    if (!existingHomePage) {
+        await prisma.page.create({
+                data: {
+                    title: 'Accueil',
+                    slug: 'accueil',
+                    content: {
+                        create: [
+                            {
+                                type: 'text',
+                                content: '<h2>Bienvenue sur CesiZen</h2><p>Votre espace de bien-être et d’écoute pour une vie étudiante plus équilibrée.</p>',
+                                order: 1,
+                            },
+                            {
+                                type: 'image',
+                                content: 'https://source.unsplash.com/800x400/?meditation,wellness',
+                                order: 2,
+                            },
+                            {
+                                type: 'text',
+                                content: '<p>Explorez nos outils et ressources pour mieux gérer votre stress au quotidien.</p>',
+                                order: 3,
+                            },
+                        ],
+                    },
+                },
+            include: {
+                content: true,
+            },
+        });
+        console.log('✅ Page "Accueil" seeded');
+    } else {
+        console.log('ℹ️ Page "Accueil" already exists, skipping');
+    }
+
+    const existingAboutPage = await prisma.page.findUnique({ where: { slug: 'a-propos' } });
+
+    if (!existingAboutPage) {
+        await prisma.page.create({
             data: {
                 title: 'À propos',
                 slug: 'a-propos',
@@ -78,7 +115,6 @@ async function main() {
                 content: true,
             },
         });
-
         console.log('✅ Page "À propos" seeded');
     } else {
         console.log('ℹ️ Pages already exist, skipping');
