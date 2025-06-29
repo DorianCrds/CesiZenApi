@@ -42,6 +42,47 @@ async function main() {
     } else {
         console.log('ℹ️ Users already exist, skipping');
     }
+
+    const existingPages = await prisma.page.findMany();
+    if (existingPages.length === 0) {
+        const aboutPage = await prisma.page.create({
+            data: {
+                title: 'À propos',
+                slug: 'a-propos',
+                content: {
+                    create: [
+                        {
+                            type: 'text',
+                            content: '<h2>Notre mission</h2><p>Améliorer le bien-être des étudiants grâce à une meilleure gestion du stress.</p>',
+                            order: 1,
+                        },
+                        {
+                            type: 'image',
+                            content: '/images/team.jpg',
+                            order: 2,
+                        },
+                        {
+                            type: 'text',
+                            content: '<p>Nous sommes une équipe passionnée réunie autour de la santé mentale.</p>',
+                            order: 3,
+                        },
+                        {
+                            type: 'video',
+                            content: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                            order: 4,
+                        },
+                    ],
+                },
+            },
+            include: {
+                content: true,
+            },
+        });
+
+        console.log('✅ Page "À propos" seeded');
+    } else {
+        console.log('ℹ️ Pages already exist, skipping');
+    }
 }
 
 main()
