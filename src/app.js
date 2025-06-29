@@ -16,6 +16,8 @@ const userResponseRoutesV1 = require('./routes/v1/userResponseRoutes');
 const contentBlockRoutesV1 = require('./routes/v1/contentBlockRoutes');
 const menuItemRoutesV1 = require('./routes/v1/menuItemRoutes');
 const stressFeedbackRangeRoutesV1 = require('./routes/v1/stressFeedbackRangeRoutes');
+const publicPageRoutesV1 = require('./routes/v1/publicPageRoutes');
+
 
 const authenticate = require('./middlewares/authMiddleware')
 
@@ -38,6 +40,8 @@ app.get('/', (req, res) => {
 const apiV1Router = express.Router();
 
 apiV1Router.use('/auth', authRoutesV1);
+
+apiV1Router.use('/public-pages', publicPageRoutesV1);
 
 apiV1Router.use('/users', authenticate, userRoutesV1);
 apiV1Router.use('/roles', authenticate, roleRoutesV1);
