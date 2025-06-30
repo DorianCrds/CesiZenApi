@@ -69,6 +69,7 @@ const me = async (req, res) => {
                 email: true,
                 firstname: true,
                 lastname: true,
+                isActive: true,
                 role: { select: { id: true, label: true } },
                 createdAt: true,
                 updatedAt: true,

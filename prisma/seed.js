@@ -43,91 +43,53 @@ async function main() {
         console.log('ℹ️ Users already exist, skipping');
     }
 
-    const existingHomePage = await prisma.page.findUnique({ where: { slug: 'accueil' } });
-
-    if (!existingHomePage) {
-        await prisma.page.create({
-                data: {
-                    title: 'Accueil',
-                    slug: 'accueil',
-                    content: {
-                        create: [
-                            {
-                                type: 'text',
-                                content: '<h2>Bienvenue sur CesiZen</h2><p>Votre espace de bien-être et d’écoute pour une vie étudiante plus équilibrée.</p>',
-                                order: 1,
-                            },
-                            {
-                                type: 'image',
-                                content: 'https://source.unsplash.com/800x400/?meditation,wellness',
-                                order: 2,
-                            },
-                            {
-                                type: 'text',
-                                content: '<p>Explorez nos outils et ressources pour mieux gérer votre stress au quotidien.</p>',
-                                order: 3,
-                            },
-                        ],
-                    },
-                },
-            include: {
-                content: true,
-            },
-        });
-        console.log('✅ Page "Accueil" seeded');
-    } else {
-        console.log('ℹ️ Page "Accueil" already exists, skipping');
-    }
-
-    const existingAboutPage = await prisma.page.findUnique({ where: { slug: 'a-propos' } });
-
-    if (!existingAboutPage) {
-        await prisma.page.create({
-            data: {
-                title: 'À propos',
-                slug: 'a-propos',
-                content: {
-                    create: [
-                        {
-                            type: 'text',
-                            content: '<h2>Notre mission</h2><p>Améliorer le bien-être des étudiants grâce à une meilleure gestion du stress.</p>',
-                            order: 1,
-                        },
-                        {
-                            type: 'image',
-                            content: '/images/team.jpg',
-                            order: 2,
-                        },
-                        {
-                            type: 'text',
-                            content: '<p>Nous sommes une équipe passionnée réunie autour de la santé mentale.</p>',
-                            order: 3,
-                        },
-                        {
-                            type: 'video',
-                            content: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-                            order: 4,
-                        },
-                    ],
-                },
-            },
-            include: {
-                content: true,
-            },
-        });
-        console.log('✅ Page "À propos" seeded');
-    } else {
-        console.log('ℹ️ Pages already exist, skipping');
-    }
+    // const existingAboutPage = await prisma.page.findUnique({ where: { slug: 'a-propos' } });
+    //
+    // if (!existingAboutPage) {
+    //     await prisma.page.create({
+    //         data: {
+    //             title: 'À propos',
+    //             slug: 'a-propos',
+    //             content: {
+    //                 create: [
+    //                     {
+    //                         type: 'text',
+    //                         content: '<h2>Notre mission</h2><p>Améliorer le bien-être des étudiants grâce à une meilleure gestion du stress.</p>',
+    //                         order: 1,
+    //                     },
+    //                     {
+    //                         type: 'image',
+    //                         content: '/images/team.jpg',
+    //                         order: 2,
+    //                     },
+    //                     {
+    //                         type: 'text',
+    //                         content: '<p>Nous sommes une équipe passionnée réunie autour de la santé mentale.</p>',
+    //                         order: 3,
+    //                     },
+    //                     {
+    //                         type: 'video',
+    //                         content: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    //                         order: 4,
+    //                     },
+    //                 ],
+    //             },
+    //         },
+    //         include: {
+    //             content: true,
+    //         },
+    //     });
+    //     console.log('✅ Page "À propos" seeded');
+    // } else {
+    //     console.log('ℹ️ Pages already exist, skipping');
+    // }
 
     const existingMenuItems = await prisma.menuItem.findMany();
     if (existingMenuItems.length === 0) {
         await prisma.menuItem.createMany({
             data: [
-                { label: 'À propos', slug: 'a-propos', order: 2, isPublic: true, requiredRole: null },
                 { label: 'Questionnaire', slug: 'questionnaire', order: 3, isPublic: false, requiredRole: 3 },
-                { label: 'Mon compte', slug: 'compte', order: 4, isPublic: false, requiredRole: 3 },
-                { label: 'Admin', slug: 'admin/dashboard', order: 5, isPublic: false, requiredRole: 2 },
+                { label: 'Admininistration', slug: 'admin/dashboard', order: 5, isPublic: false, requiredRole: 2 },
             ],
         });
 

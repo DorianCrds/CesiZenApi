@@ -8,6 +8,6 @@ const {registerSchema, loginSchema} = require("../../validation/authValidator");
 
 router.post('/login', validate(loginSchema), login);
 router.post('/register', validate(registerSchema), register);
-router.post('/me', authenticate, authorizeRoles([1, 2, 3]), me);
+router.get('/me', authenticate, authorizeRoles([1, 2, 3]), me);
 
 module.exports = router;
