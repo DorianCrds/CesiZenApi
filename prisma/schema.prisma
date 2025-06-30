@@ -66,6 +66,8 @@ model MenuItem {
   order     Int
   pageId    Int?     @map("page_id")
   page      Page?    @relation(fields: [pageId], references: [id])
+  isPublic  Boolean  @default(true)
+  requiredRole Int?  //null = public
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 

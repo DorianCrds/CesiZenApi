@@ -34,6 +34,20 @@ const MenuItemModel = {
             where: { id: parseInt(id) },
         });
     },
+
+    getPublicMenuItems: async () => {
+        return prisma.menuItem.findMany({
+            where: {
+                OR: [
+                    { isPublic: true },
+                    { requiredRole: null },
+                ],
+            },
+            orderBy: { order: 'asc' },
+            include: { page: true },
+        });
+    },
+
 };
 
 module.exports = MenuItemModel;

@@ -119,6 +119,22 @@ async function main() {
     } else {
         console.log('ℹ️ Pages already exist, skipping');
     }
+
+    const existingMenuItems = await prisma.menuItem.findMany();
+    if (existingMenuItems.length === 0) {
+        await prisma.menuItem.createMany({
+            data: [
+                { label: 'À propos', slug: 'a-propos', order: 2, isPublic: true, requiredRole: null },
+                { label: 'Questionnaire', slug: 'questionnaire', order: 3, isPublic: false, requiredRole: 3 },
+                { label: 'Mon compte', slug: 'compte', order: 4, isPublic: false, requiredRole: 3 },
+                { label: 'Admin', slug: 'admin/dashboard', order: 5, isPublic: false, requiredRole: 2 },
+            ],
+        });
+
+        console.log('✅ MenuItems seeded');
+    } else {
+        console.log('ℹ️ MenuItems already exist, skipping');
+    }
 }
 
 main()
