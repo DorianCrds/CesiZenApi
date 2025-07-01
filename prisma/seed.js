@@ -1,14 +1,97 @@
-const { PrismaClient } = require('@prisma/client');
+const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
+
+const aboutPageContent = [
+    {
+        type: 'text',
+        content: `
+      <section class="text-center">
+        <p class="text-lg text-gray-600">
+          Une plateforme pour mieux comprendre et gérer votre santé mentale au quotidien.
+        </p>
+      </section>
+    `,
+        order: 1,
+    },
+    {
+        type: 'text',
+        content: `
+      <section class="space-y-4">
+        <h2 class="text-2xl font-semibold text-gray-800">Notre mission</h2>
+        <p class="text-gray-700">
+          CesiZen est une initiative du ministère de la Santé et de la Prévention. Elle vise à proposer au
+          grand public un accès simplifié à des outils interactifs de prévention en santé mentale,
+          centrés notamment sur la gestion du stress.
+        </p>
+        <p class="text-gray-700">
+          L’objectif est d’aider chacun à comprendre son état émotionnel, à travers des contenus fiables,
+          des diagnostics personnalisés et des activités de relaxation accessibles.
+        </p>
+      </section>
+    `,
+        order: 2,
+    },
+    {
+        type: 'image',
+        content: '/images/a-propos-1.jpg',
+        order: 3,
+    },
+    {
+        type: 'text',
+        content: `
+    <section class="space-y-4">
+      <h2 class="text-2xl font-semibold text-gray-800">Fonctionnalités clés</h2>
+      <ul class="list-disc pl-6 text-gray-700 space-y-1">
+        <li>Informations validées par des experts en santé mentale</li>
+        <li>Diagnostics interactifs basés sur l’échelle de Holmes et Rahe</li>
+        <li>Exercices de relaxation guidés</li>
+        <li>Suivi émotionnel avec un tracker intégré</li>
+        <li>Activités de détente à explorer</li>
+      </ul>
+    </section>
+    `,
+        order: 4,
+    },
+    {
+        type: 'image',
+        content: '/images/a-propos-2.png',
+        order: 5,
+    },
+    {
+        type: 'text',
+        content: `
+      <section class="space-y-4">
+        <h2 class="text-2xl font-semibold text-gray-800">Sécurité et confidentialité</h2>
+        <p class="text-gray-700">
+          CesiZen respecte les normes du RGPD. Aucune donnée médicale n’est partagée ou exploitée.
+          L'utilisateur garde le contrôle total de ses informations.
+        </p>
+      </section>
+    `,
+        order: 6,
+    },
+    {
+        type: 'text',
+        content: `
+      <section class="text-center pt-8">
+        <p class="text-gray-600">
+          Merci de faire partie de la communauté <span class="font-semibold text-blue-600">CesiZen</span> 💙
+        </p>
+      </section>
+    `,
+        order: 7,
+    },
+];
+
 
 async function main() {
     const existingRoles = await prisma.role.findMany();
     if (existingRoles.length === 0) {
         await prisma.role.createMany({
             data: [
-                { label: 'super-admin' },
-                { label: 'admin' },
-                { label: 'user' },
+                {label: 'super-admin'},
+                {label: 'admin'},
+                {label: 'user'},
             ],
         });
         console.log('✅ Roles seeded');
@@ -43,53 +126,32 @@ async function main() {
         console.log('ℹ️ Users already exist, skipping');
     }
 
-    // const existingAboutPage = await prisma.page.findUnique({ where: { slug: 'a-propos' } });
-    //
-    // if (!existingAboutPage) {
-    //     await prisma.page.create({
-    //         data: {
-    //             title: 'À propos',
-    //             slug: 'a-propos',
-    //             content: {
-    //                 create: [
-    //                     {
-    //                         type: 'text',
-    //                         content: '<h2>Notre mission</h2><p>Améliorer le bien-être des étudiants grâce à une meilleure gestion du stress.</p>',
-    //                         order: 1,
-    //                     },
-    //                     {
-    //                         type: 'image',
-    //                         content: '/images/team.jpg',
-    //                         order: 2,
-    //                     },
-    //                     {
-    //                         type: 'text',
-    //                         content: '<p>Nous sommes une équipe passionnée réunie autour de la santé mentale.</p>',
-    //                         order: 3,
-    //                     },
-    //                     {
-    //                         type: 'video',
-    //                         content: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    //                         order: 4,
-    //                     },
-    //                 ],
-    //             },
-    //         },
-    //         include: {
-    //             content: true,
-    //         },
-    //     });
-    //     console.log('✅ Page "À propos" seeded');
-    // } else {
-    //     console.log('ℹ️ Pages already exist, skipping');
-    // }
+    const existingAboutPage = await prisma.page.findUnique({where: {slug: 'a-propos'}});
+
+    if (!existingAboutPage) {
+        await prisma.page.create({
+            data: {
+                title: 'À propos de CesiZen',
+                slug: 'a-propos',
+                content: {
+                    create: aboutPageContent,
+                },
+            },
+            include: {
+                content: true,
+            },
+        });
+        console.log('✅ Page "À propos" seeded');
+    } else {
+        console.log('ℹ️ Page "À propos" already exists, skipping');
+    }
+
 
     const existingMenuItems = await prisma.menuItem.findMany();
     if (existingMenuItems.length === 0) {
         await prisma.menuItem.createMany({
             data: [
-                { label: 'Questionnaire', slug: 'questionnaire', order: 3, isPublic: false, requiredRole: 3 },
-                { label: 'Admininistration', slug: 'admin/dashboard', order: 5, isPublic: false, requiredRole: 2 },
+                {label: 'À propos', slug: 'a-propos', order: 3, isPublic: true, requiredRole: null},
             ],
         });
 
