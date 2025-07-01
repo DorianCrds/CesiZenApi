@@ -6,11 +6,11 @@ const authorizeRoles = require("../../middlewares/roleMiddleware");
 const validate = require("../../middlewares/validateMiddleware");
 const {createQuestionnaireSchema, updateQuestionnaireSchema} = require("../../validation/questionnaireValidator");
 
-router.get('/', authenticate, authorizeRoles([1, 2, 3]), QuestionnaireController.getAllQuestionnaires);
-router.get('/:id', authenticate, authorizeRoles([1, 2, 3]), QuestionnaireController.getQuestionnaireById);
+router.get('/', authorizeRoles([1, 2, 3]), QuestionnaireController.getAllQuestionnaires);
+router.get('/:id', authorizeRoles([1, 2, 3]), QuestionnaireController.getQuestionnaireById);
 router.post('/', authorizeRoles([1, 2]), validate(createQuestionnaireSchema), QuestionnaireController.createQuestionnaire);
 // router.put('/:id', authorizeRoles([1, 2]), validate(updateQuestionnaireSchema), QuestionnaireController.updateQuestionnaire);
-router.delete('/:id', authenticate, authorizeRoles([1, 2]), QuestionnaireController.deleteQuestionnaire);
+router.delete('/:id', authorizeRoles([1, 2]), QuestionnaireController.deleteQuestionnaire);
 
 
 module.exports = router;
