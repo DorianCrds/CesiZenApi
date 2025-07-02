@@ -6,6 +6,8 @@ const authorizeRoles = require("../../middlewares/roleMiddleware");
 const validate = require("../../middlewares/validateMiddleware");
 const {createQuestionnaireSchema, updateQuestionnaireSchema} = require("../../validation/questionnaireValidator");
 
+router.use(authenticate);
+
 router.get('/', authorizeRoles([1, 2, 3]), QuestionnaireController.getAllQuestionnaires);
 router.get('/:id', authorizeRoles([1, 2, 3]), QuestionnaireController.getQuestionnaireById);
 router.post('/', authorizeRoles([1, 2]), validate(createQuestionnaireSchema), QuestionnaireController.createQuestionnaire);

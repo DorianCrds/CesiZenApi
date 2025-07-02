@@ -4,12 +4,27 @@ const bcrypt = require('bcrypt');
 const UserController = {
     getAllUsers: async (req, res) => {
         try {
-            const users = await UserModel.getAllUsers();
+            const requesterRole = req.user?.role?.label;
+
+            let users;
+            if (requesterRole === 'super-admin') {
+                // Super-admin voit tout le monde
+                users = await UserModel.getAllUsers();
+            } else if (requesterRole === 'admin') {
+                // Admins ne voient que les utilisateurs "simples"
+                users = await UserModel.getUsersByRoleLabel('user');
+            } else {
+                return res.status(403).json({ error: 'Accès interdit' });
+            }
+
+            console.log('[DEBUG] Utilisateurs renvoyés :', users);
             res.json(users);
+
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     },
+
 
     getUserById: async (req, res) => {
         try {
@@ -55,6 +70,17 @@ const UserController = {
             res.status(500).json({ error: error.message });
         }
     },
+
+    toggleUserStatus: async (req, res) => {
+        try {
+            const { isActive } = req.body;
+            const updatedUser = await UserModel.updateUser(req.params.id, { isActive });
+            res.json(updatedUser);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+
 };
 
 module.exports = UserController;

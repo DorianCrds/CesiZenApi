@@ -50,6 +50,21 @@ const UserModel = {
         });
     },
 
+    getUsersByRoleLabel: async (label) => {
+        return await prisma.user.findMany({
+            where: {
+                isActive: true,
+                role: {
+                    label: label
+                }
+            },
+            include: {
+                role: true
+            }
+        });
+    }
+
+
 };
 
 module.exports = UserModel;

@@ -6,6 +6,8 @@ const authorizeRoles = require("../../middlewares/roleMiddleware");
 const validate = require("../../middlewares/validateMiddleware");
 const {roleSchema} = require("../../validation/roleValidator");
 
+router.use(authenticate);
+
 router.get('/', authorizeRoles([1]), RoleController.getAllRoles);
 router.get('/:id', authorizeRoles([1]), RoleController.getRoleById);
 router.post('/', authorizeRoles([1]), validate(roleSchema), RoleController.createRole);

@@ -6,6 +6,8 @@ const authorizeRoles = require("../../middlewares/roleMiddleware");
 const validate = require("../../middlewares/validateMiddleware");
 const {createStressFeedbackRangeSchema, updateStressFeedbackRangeSchema} = require("../../validation/stressFeedbackRangeValidator");
 
+router.use(authenticate);
+
 router.get('/', StressFeedbackRangeController.getAllStressFeedbackRanges);
 router.get('/:id', StressFeedbackRangeController.getStressFeedbackRangeById);
 router.post('/', authorizeRoles([1, 2]), validate(createStressFeedbackRangeSchema), StressFeedbackRangeController.createStressFeedbackRange);

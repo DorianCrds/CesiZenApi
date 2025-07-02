@@ -45,15 +45,15 @@ apiV1Router.use('/auth', authRoutesV1);
 apiV1Router.use('/public-pages', publicPageRoutesV1);
 apiV1Router.use('/public-menu', publicMenuItemRoutesV1);
 
-apiV1Router.use('/users', authenticate, userRoutesV1);
-apiV1Router.use('/roles', authenticate, roleRoutesV1);
-apiV1Router.use('/questionnaires', authenticate, questionnaireRoutesV1);
-apiV1Router.use('/pages', authenticate, pageRoutesV1);
-apiV1Router.use('/events', authenticate, eventRoutesV1);
-apiV1Router.use('/user-responses', authenticate, userResponseRoutesV1);
-apiV1Router.use('/content-blocks', authenticate, contentBlockRoutesV1);
-apiV1Router.use('/menu-items', authenticate, menuItemRoutesV1);
-apiV1Router.use('/stress-feedback-ranges', authenticate, stressFeedbackRangeRoutesV1);
+apiV1Router.use('/users', userRoutesV1);
+apiV1Router.use('/roles', roleRoutesV1);
+apiV1Router.use('/questionnaires', questionnaireRoutesV1);
+apiV1Router.use('/pages', pageRoutesV1);
+apiV1Router.use('/events', eventRoutesV1);
+apiV1Router.use('/user-responses', userResponseRoutesV1);
+apiV1Router.use('/content-blocks', contentBlockRoutesV1);
+apiV1Router.use('/menu-items', menuItemRoutesV1);
+apiV1Router.use('/stress-feedback-ranges', stressFeedbackRangeRoutesV1);
 apiV1Router.use('/admin', adminStatsRoutesV1);
 
 app.use('/cesizen/api/v1', apiV1Router);

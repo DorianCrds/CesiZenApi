@@ -6,6 +6,8 @@ const authenticate = require("../../middlewares/authMiddleware");
 const validate = require("../../middlewares/validateMiddleware");
 const { createUserResponseSchema } = require("../../validation/userResponseValidator");
 
+router.use(authenticate);
+
 router.get('/', authorizeRoles([1, 2]), UserResponseController.getAllUserResponses);
 router.get('/:id', authorizeRoles([1, 2, 3]), UserResponseController.getUserResponseById);
 router.post('/', authorizeRoles([1, 2, 3]), validate(createUserResponseSchema), UserResponseController.createUserResponse);

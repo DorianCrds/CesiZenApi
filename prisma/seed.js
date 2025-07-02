@@ -106,6 +106,13 @@ async function main() {
         await prisma.user.createMany({
             data: [
                 {
+                    lastname: 'Kent',
+                    firstname: 'Clark',
+                    email: 'superman@example.com',
+                    password: '$2b$10$.tLd5jVIevXlDaHxPura0u1NNUB5OgLIw7QEDTJZlR9jy345pLTJe', // bcrypt hash
+                    roleId: roles.find(r => r.label === 'super-admin')?.id,
+                },
+                {
                     lastname: 'Doe',
                     firstname: 'John',
                     email: 'john.doe@example.com',

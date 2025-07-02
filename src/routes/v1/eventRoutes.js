@@ -6,6 +6,7 @@ const authorizeRoles = require("../../middlewares/roleMiddleware");
 const validate = require("../../middlewares/validateMiddleware");
 const {createEventSchema, updateEventSchema} = require("../../validation/eventValidator");
 
+router.use(authenticate);
 
 router.get('/', authorizeRoles([1, 2, 3]), EventController.getAllEvents);
 router.get('/:id', authorizeRoles([1, 2, 3]), EventController.getEventById);
