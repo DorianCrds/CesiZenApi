@@ -29,8 +29,9 @@ const PageModel = {
 
     updatePage: async (id, data) => {
         return await prisma.page.update({
-            where: { id: Number(id) },
+            where: { id: Number(id) }, // ✅ correction : ajout de l'ID dans la clause `where`
             data,
+            include: { content: true }, // ✅ optionnel mais utile pour récupérer les blocs après mise à jour
         });
     },
 

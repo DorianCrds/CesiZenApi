@@ -32,7 +32,11 @@ const PageController = {
 
     updatePage: async (req, res) => {
         try {
-            const updated = await PageModel.updatePage(req.params.id, req.body);
+            const page = await PageModel.getPageBySlug(req.params.slug); // ✅ récupération via slug
+            if (!page) return res.status(404).json({ error: 'Page not found' });
+
+            const { title, slug } = req.body;
+            const updated = await PageModel.updatePage(page.id, { title, slug });
             res.json(updated);
         } catch (err) {
             res.status(500).json({ error: err.message });
@@ -41,7 +45,10 @@ const PageController = {
 
     deletePage: async (req, res) => {
         try {
-            await PageModel.deletePage(req.params.id);
+            const page = await PageModel.getPageBySlug(req.params.slug); // ✅ récupération via slug
+            if (!page) return res.status(404).json({ error: 'Page not found' });
+
+            await PageModel.deletePage(page.id);
             res.status(204).end();
         } catch (err) {
             res.status(500).json({ error: err.message });
