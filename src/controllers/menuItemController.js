@@ -24,9 +24,16 @@ const MenuItemController = {
 
     createMenuItem: async (req, res) => {
         try {
-            const newItem = await MenuItemModel.createMenuItem(req.body);
+            const data = {
+                ...req.body,
+                isPublic: req.body.isPublic ?? true,
+                requiredRole: req.body.requiredRole ?? null,
+            };
+
+            const newItem = await MenuItemModel.createMenuItem(data);
             res.status(201).json(newItem);
         } catch (err) {
+            console.error('Erreur createMenuItem:', err);
             res.status(500).json({ error: 'Error creating menu item.' });
         }
     },
