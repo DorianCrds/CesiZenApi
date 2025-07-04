@@ -17,7 +17,18 @@ const UserResponseController = {
             if (!response) {
                 return res.status(404).json({ error: 'User response not found.' });
             }
-            res.json(response);
+
+            const feedback = await prisma.stressFeedbackRange.findFirst({
+                where: {
+                    minScore: { lte: response.totalScore },
+                    maxScore: { gte: response.totalScore },
+                },
+            });
+
+            res.json({
+                ...response,
+                feedbackMessage: feedback?.message || null,
+            });
         } catch (err) {
             res.status(500).json({ error: 'An error occurred while fetching the user response.' });
         }
