@@ -11,7 +11,7 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: 'http://localhost:3000/cesizen/api/v1',
+                url: 'http://localhost:4000/cesizen/api/v1',
             },
         ],
     },
