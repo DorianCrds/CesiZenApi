@@ -34,7 +34,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: docker/api
+          context: .
           file: docker/api/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/cesizen-api:latest
