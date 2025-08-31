@@ -58,4 +58,8 @@ apiV1Router.use('/admin', adminStatsRoutesV1);
 
 app.use('/cesizen/api/v1', apiV1Router);
 
+app.get('/health', (req, res) => {
+    res.status(200).send('OK');
+});
+
 module.exports = app;
