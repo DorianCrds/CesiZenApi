@@ -9,6 +9,7 @@ describe('Healthcheck', () => {
     });
 });
 
+// test
 describe('Root', () => {
     it('GET / should return running message', async () => {
         const res = await request(app).get('/');
